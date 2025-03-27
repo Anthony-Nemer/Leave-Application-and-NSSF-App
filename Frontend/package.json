@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "nodemailer": "^6.9.15",
+    "vis-network": "^9.1.9"
+  }
+}

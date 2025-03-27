@@ -1,0 +1,190 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1001;
+}
+
+.lr-modal {
+    width: 600px !important;
+}
+
+.lr-modal .rmdp-shadow {
+    box-shadow: none !important;
+}
+
+.lr-modal .rmdp-calendar {
+    width: 550px !important;
+}
+
+.lr-modal .rmdp-calendar div:not([class]) {
+    width: 100%;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.teal .rmdp-wrapper,
+.teal .rmdp-wrapper .rmdp-day-picker {
+    background: #004d40;
+    border-radius: 8px;
+    color: white;
+}
+
+.teal .rmdp-wrapper .rmdp-day-picker .rmdp-day.selected {
+    background: #004d40;
+    color: #fff;
+}
+
+.teal .rmdp-wrapper .rmdp-day-picker .rmdp-day:hover:not(.selected) {
+    background: #00796b;
+    color: #fff;
+}
+
+button.rmdp-arrow-container {
+    background-color: transparent !important;
+}
+
+button.rmdp-arrow-container:hover {
+    box-shadow: none !important;
+}
+
+button.rmdp-arrow-container:hover .rmdp-arrow {
+    color: teal;
+    border: solid;
+    border-width: 0 2px 2px 0;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+.full-day {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.half-day-morning {
+    color: black !important;
+    background: linear-gradient(-90deg, transparent, transparent 49%, transparent 49%, transparent 51%, #4CAF50 51%) !important;
+}
+
+.half-day-afternoon {
+    color: black !important;
+    background: linear-gradient(90deg, transparent, transparent 49%, transparent 49%, transparent 51%, #4CAF50 51%) !important;
+}
+
+.HD-AM, .HD-PM {
+    background-color: rgb(238, 93, 93); 
+    color: black !important;
+}
+
+.HD-AM {
+    background: linear-gradient(-90deg, transparent, transparent 49%, transparent 49%, transparent 51%, rgb(238, 93, 93) 51%) !important;
+}
+
+.HD-PM {
+    background: linear-gradient(90deg, transparent, transparent 49%, transparent 49%, transparent 51%, rgb(238, 93, 93) 51%) !important;
+}
+
+.HD-AM.HD-PM {
+    background: none;
+    background-color: rgb(238, 93, 93) !important; 
+    color: black !important;
+}
+
+.half-day-morning.HD-PM {
+    background: linear-gradient(90deg, #4CAF50, #4CAF50 49%, #4CAF50 49%, #4CAF50 51%, rgb(238, 93, 93) 51%) !important;
+}
+
+.half-day-afternoon.HD-AM {
+    background: linear-gradient(-90deg, #4CAF50, #4CAF50 49%, #4CAF50 49%, #4CAF50 51%, rgb(238, 93, 93) 51%) !important;
+}
+
+.NONE {
+    background-color: rgb(238, 93, 93);
+    color: black !important;
+}
+
+.disabled-day {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.existing-full-day .rmdp-day {
+    background-color: lightblue !important;
+    border-radius: 50%;
+}
+
+.existing-half-day .rmdp-day {
+    background: linear-gradient(to top, lightblue 50%, transparent 50%) !important;
+    border-radius: 50%;
+}
+
+
+.PTO{
+    background-color: #FFA500 !important;
+    color: black !important;
+}
+.ptoStatement{
+    color: #FFA500;
+}
+.daysToBeConsumed{
+    color:red;
+}
+

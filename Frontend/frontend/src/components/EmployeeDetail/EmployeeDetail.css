@@ -1,0 +1,35 @@
+.employee-detail {
+    padding: 20px;
+}
+
+.employee-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.employee-detail-table th, .employee-detail-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.employee-detail-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.edit-button {
+    background-color: #4cacaf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #4562a0;
+}

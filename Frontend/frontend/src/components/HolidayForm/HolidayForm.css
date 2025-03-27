@@ -1,0 +1,132 @@
+.holiday-form {
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.holiday-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.holiday-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.holiday-form form div {
+    margin-bottom: 15px;
+}
+
+.holiday-form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.holiday-form input,
+.holiday-form .react-datepicker-wrapper {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f7f7f7;
+}
+
+.holiday-form button {
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.holiday-form button:hover {
+    background: #0056b3;
+}
+
+.holiday-form p {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+
+.table-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-container th {
+    background: #f4f4f4;
+    text-align: left;
+    font-weight: bold;
+    color: #555;
+}
+
+.table-container tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.table-container tr:hover {
+    background: #f1f1f1;
+}
+
+.table-container td {
+    cursor: pointer;
+    color: #007bff;
+}
+
+.table-container td:hover {
+    text-decoration: underline;
+}
+
+.modal-content {
+    padding: 20px;
+    margin: 40px auto;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.del_holiday{
+    transition: background-color 0.2s ease-out;
+}
+.del_holiday:active{
+    background-color: lightgray;
+    transform: scale(2, 2); /* Use transform to scale */
+}
+
+.bi-trash:hover{
+    fill: red;
+}

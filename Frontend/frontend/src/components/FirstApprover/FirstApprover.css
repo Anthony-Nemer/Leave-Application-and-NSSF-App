@@ -1,0 +1,71 @@
+/* src/components/FirstApprovalRequests/FirstApprovalRequests.css */
+
+.leave-requests-container {
+    position: relative;
+    padding: 20px;
+}
+
+.data-grid-container {
+    margin-top: 20px;
+}
+
+.MuiDataGrid-root {
+    background-color: #fff;
+}
+
+.MuiDataGrid-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.MuiDataGrid-columnHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+    font-weight: bold;
+}
+
+.modal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 600px;
+    max-width: 100%;
+    margin: 50px auto;
+}
+
+.event-list {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.event-list h2 {
+    margin-top: 0;
+}
+
+.event-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.event-list li {
+    background: #3174ad;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,35 @@
+.items {
+  display: flex;
+  flex-wrap: wrap; /* This ensures the items will wrap to a new line if there's not enough space */
+  gap: 5px; /* Space between each input */
+  margin-bottom: 20px;
+}
+
+.items label {
+  display: flex;
+  flex-direction: column;
+  width: 140px; /* Optional: Set a fixed width to make sure inputs are aligned uniformly */
+}
+
+.items input {
+  width: 100%; /* Make inputs take up the full width of their container */
+  padding: 8px;
+  margin-top: 2px; /* Add some space between the label and input */
+}
+
+label.required:before {
+  content: "*";
+  color: red;
+}
+
+label.required {
+  font-weight: bold;
+}
+
+.items label.required:after {
+  content: "*";
+  color: red;
+}
+.items label.required:before {
+  content: "";
+}

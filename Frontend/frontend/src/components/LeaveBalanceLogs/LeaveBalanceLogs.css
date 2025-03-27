@@ -1,0 +1,15 @@
+.leave-balance-logs-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.leave-balance-logs-container h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.leave-balance-logs-table-container{
+    width: 100%;
+    max-width: 1200px;
+}
