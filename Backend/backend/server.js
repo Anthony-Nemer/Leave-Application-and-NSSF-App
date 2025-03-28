@@ -93,7 +93,7 @@ function sendEmailNotifications(to, subject, text, link){
 
 
 // CONSTANTS
-const zalkaLocationId = 1;
+const mainLocationId = 1;
 
 app.use(cors());
 app.use(express.json());
@@ -103,9 +103,6 @@ const port = 5000;
 
 const jwt_secret = 'b01abafb275676041ad5c77c7117e31b165a2fd410b938c80a64c190fee0ff6e55791a4ae0eedd9e89b62b66ef1779f61e8086f09719d243d3c3fbfef4c77d23';
 
-// app.listen(port, '192.168.1.118', () => {
-//     console.log(`Server running on port ${port}`);
-// });
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
