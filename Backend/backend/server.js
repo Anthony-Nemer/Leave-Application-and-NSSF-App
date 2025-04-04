@@ -775,15 +775,15 @@ app.get('/bank-employees', (req, res) => {
                     l.location AS branch_location,
                     CONCAT(rs.first_name_en,' ', rs.last_name_en) AS related_to_full_name
                 FROM 
-                    blom_staff b
+                    bank_staff b
                 JOIN 
-                    blom_company c ON b.company_id = c.id
+                    bank_company c ON b.company_id = c.id
                 JOIN 
-                    blom_location l ON b.location = l.id
+                    bank_location l ON b.location = l.id
                 LEFT JOIN 
-                    blom_staff rs ON b.related_to = rs.id
+                    bank_staff rs ON b.related_to = rs.id
                 LEFT JOIN 
-                    blom_relation r ON b.relation_id = r.id;
+                    bank_relation r ON b.relation_id = r.id;
                 
                 `;
     db.query(query, async (err, results) => {
@@ -814,15 +814,15 @@ app.get('/pure-bank-employees', (req, res) => {
                     l.location AS branch_location,
                     CONCAT(rs.first_name_en,' ', rs.last_name_en) AS related_to_full_name
                 FROM 
-                    blom_staff b
+                    bank_staff b
                 JOIN 
-                    blom_company c ON b.company_id = c.id
+                    bank_company c ON b.company_id = c.id
                 JOIN 
-                    blom_location l ON b.location = l.id
+                    bank_location l ON b.location = l.id
                 LEFT JOIN 
-                    blom_staff rs ON b.related_to = rs.id
+                    bank_staff rs ON b.related_to = rs.id
                 LEFT JOIN 
-                    blom_relation r ON b.relation_id = r.id
+                    bank_relation r ON b.relation_id = r.id
                 WHERE b.relation_id = '6';
                 
                 `;
@@ -925,15 +925,15 @@ app.get('/bankEmployee/:id',async  (req, res) => {
                         l.location AS branch_location,
                         CONCAT(r.first_name_en, ' ', r.last_name_en) AS related_to_full_name
                     FROM 
-                        blom_staff b
+                        bank_staff b
                     JOIN 
-                        blom_company c ON b.company_id = c.id
+                        bank_company c ON b.company_id = c.id
                     JOIN 
-                        blom_location l ON b.location = l.id
+                        bank_location l ON b.location = l.id
                     LEFT JOIN 
-                        blom_staff r ON b.related_to = r.id
+                        bank_staff r ON b.related_to = r.id
                     LEFT JOIN 
-                        blom_relation br ON b.relation_id = br.id 
+                        bank_relation br ON b.relation_id = br.id 
                     WHERE 
                         b.id = ?; 
                     `;
@@ -963,7 +963,7 @@ app.post('/insert-bank-bill', async (req, res) => {
         }
 
         db.query(
-            `INSERT INTO blom_bills (payment_id, invoice_date, ensured_id, userId) VALUES (?, ?, ?, ?)`,
+            `INSERT INTO bank_bills (payment_id, invoice_date, ensured_id, userId) VALUES (?, ?, ?, ?)`,
             [payment_id, invoice_date, ensured_id, LoggedInUser], (err, result) => {
                 if(err){
                     console.error('Error inserting bill:', error);
@@ -992,7 +992,7 @@ app.post('/insert-medical-cases', async (req, res) => {
         const promises = medicalCases.map((caseData) =>
             // Use the promise-based query method for each medical case
             db.promise().query(
-                `INSERT INTO blom_medical_cases (bill_id, item_id, nssf_amount, nssf_share, invoice_amount, blom_share, total_lbp, total_dollars) 
+                `INSERT INTO bank_medical_cases (bill_id, item_id, nssf_amount, nssf_share, invoice_amount, bank_share, total_lbp, total_dollars) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     caseData.bill_id,
@@ -1000,7 +1000,7 @@ app.post('/insert-medical-cases', async (req, res) => {
                     caseData.nssf_amount,
                     caseData.nssf_share,
                     caseData.invoice_amount,
-                    caseData.blom_share,
+                    caseData.bank_share,
                     caseData.total_lbp,
                     caseData.total_dollars,
                 ]
@@ -1117,7 +1117,7 @@ app.post('/add-insured', async (req, res) => {
     } = req.body;
 
     const checkDuplicates = `
-        SELECT * FROM blom_staff 
+        SELECT * FROM bank_staff 
         WHERE first_name_en = ? AND date_of_birth = ? AND nssf_no = ? AND bank_pin = ?
     `;
 
@@ -1132,7 +1132,7 @@ app.post('/add-insured', async (req, res) => {
         }
 
         const insertQuery = `
-            INSERT INTO blom_staff 
+            INSERT INTO bank_staff 
             (first_name_en, middle_name_en, last_name_en, maiden_en, first_name_ar, middle_name_ar, last_name_ar, maiden_ar, date_of_birth, relation_id, related_to, nssf_no, bank_pin, location, company_id) 
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
         `;
@@ -1193,7 +1193,7 @@ app.patch('/update-bank-employee/:id', (req, res) => {
     const id = req.params.id;
     const LoggedInUser = getIdFromToken(req); // Get HR user ID from token
 
-    db.query(`SELECT * FROM blom_staff WHERE id = ?`, [id], (err, result) => {
+    db.query(`SELECT * FROM bank_staff WHERE id = ?`, [id], (err, result) => {
         if (err) {
             console.error('Error fetching original employee:', err);
             return res.status(500).send(err);
@@ -1212,8 +1212,8 @@ app.patch('/update-bank-employee/:id', (req, res) => {
         const updatedEmployee = {
             ...originalEmployee,
             ...updates,
-            location: updates.blom_location_id || originalEmployee.location,
-            company_id: updates.blom_company_id || originalEmployee.company_id,
+            location: updates.bank_location_id || originalEmployee.location,
+            company_id: updates.bank_company_id || originalEmployee.company_id,
             relation_id: updates.relation || originalEmployee.relation_id,
             related_to: updates.related_to_id || originalEmployee.related_to
         };
@@ -1221,7 +1221,7 @@ app.patch('/update-bank-employee/:id', (req, res) => {
         // console.log("Original Employee Data:", JSON.stringify(originalEmployee, null, 2));
         // console.log("Updated Employee Data:", JSON.stringify(updatedEmployee, null, 2));
 
-        // Destructure only fields that exist in the `blom_staff` table
+        // Destructure only fields that exist in the `bank_staff` table
         const {
             first_name_en, middle_name_en, last_name_en,
             first_name_ar, middle_name_ar, last_name_ar,
@@ -1230,7 +1230,7 @@ app.patch('/update-bank-employee/:id', (req, res) => {
         } = updatedEmployee;
 
         const query = `
-            UPDATE blom_staff
+            UPDATE bank_staff
             SET 
                 first_name_en = ?, middle_name_en = ?, last_name_en = ?, 
                 first_name_ar = ?, middle_name_ar = ?, last_name_ar = ?, 
@@ -1240,7 +1240,7 @@ app.patch('/update-bank-employee/:id', (req, res) => {
         `;
 
         const updateRelatedEmployeesQuery = `
-            UPDATE blom_staff
+            UPDATE bank_staff
             SET location = ?, company_id = ?, nssf_no = ?, bank_pin = ?
             WHERE related_to = ?;
         `;
@@ -1499,7 +1499,7 @@ app.patch('/bank-branch/:id', (req, res) => {
     }
 
         const updateBranchQuery = `
-            UPDATE blom_location
+            UPDATE bank_location
             SET location = ?
             WHERE id = ?;
         `;
@@ -1527,7 +1527,7 @@ app.patch('/bank-company/:id', (req, res) => {
     }
 
         const updateBranchQuery = `
-            UPDATE blom_company
+            UPDATE bank_company
             SET company_name = ?
             WHERE id = ?;
         `;
@@ -1560,7 +1560,7 @@ app.patch('/bank-item/:id', (req, res) => {
     const percentageValue = percentage === undefined || percentage === "" || isNaN(Number(percentage)) ? null : parseFloat(percentage);
 
     // Fetch the current values from the database
-    const getCurrentItemQuery = 'SELECT * FROM blom_items WHERE id = ?';
+    const getCurrentItemQuery = 'SELECT * FROM bank_items WHERE id = ?';
     db.query(getCurrentItemQuery, [itemId], (err, result) => {
         if (err) {
             console.error('Error fetching item:', err);
@@ -1577,7 +1577,7 @@ app.patch('/bank-item/:id', (req, res) => {
 
         // Update the item if price or percentage has changed
         const updateItemQuery = `
-            UPDATE blom_items
+            UPDATE bank_items
             SET item_name = ?, price = ?, percentage = ?
             WHERE id = ?;
         `;
@@ -1594,7 +1594,7 @@ app.patch('/bank-item/:id', (req, res) => {
             // Log the changes only if price or percentage was updated
             if (priceValue !== oldPrice || percentageValue !== oldPercentage) {
                 const insertLogQuery = `
-                    INSERT INTO blom_items_logs (userId, item_id, oldprice, old_percentage, new_price, new_percentage)
+                    INSERT INTO bank_items_logs (userId, item_id, oldprice, old_percentage, new_price, new_percentage)
                     VALUES (?, ?, ?, ?, ?, ?);
                 `;
                 db.query(insertLogQuery, [
@@ -1822,9 +1822,9 @@ app.get('/departments', (req, res) => {
 })});
 
 
-app.get('/blom_companies', (req, res) => {
+app.get('/bank_companies', (req, res) => {
     var query = `
-        SELECT id, company_name FROM blom_company
+        SELECT id, company_name FROM bank_company
     `;
     db.query(query, (err, result) => {
         if (err) res.send(err);
@@ -1832,9 +1832,9 @@ app.get('/blom_companies', (req, res) => {
 })});
 
 
-app.get('/blom_items', (req, res) => {
+app.get('/bank_items', (req, res) => {
     var query = `
-        SELECT id, item_name, price, percentage*100 as percentage FROM blom_items
+        SELECT id, item_name, price, percentage*100 as percentage FROM bank_items
     `;
     db.query(query, (err, result) => {
         if (err) res.send(err);
@@ -1850,7 +1850,7 @@ app.post('/add-item', (req, res) => {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
-    const sql = 'INSERT INTO blom_items (item_name, price, percentage) VALUES (?, ?, ?)';
+    const sql = 'INSERT INTO bank_items (item_name, price, percentage) VALUES (?, ?, ?)';
     db.query(sql, [item_name, parseFloat(price), parseFloat(percentage)], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Error inserting item' });
@@ -1890,7 +1890,7 @@ app.post('/add-branch', async (req, res) => {
     const { location } = req.body;
 
     // Check if branch already exists
-    const duplicateCheckQuery = `SELECT * FROM blom_location WHERE location = ?`;
+    const duplicateCheckQuery = `SELECT * FROM bank_location WHERE location = ?`;
     db.query(duplicateCheckQuery, [location], (err, results) => {
         if (err) {
             console.error(err);
@@ -1904,14 +1904,14 @@ app.post('/add-branch', async (req, res) => {
         }
 
         // Insert new branch
-        const insertQuery = `INSERT INTO blom_location (location) VALUES (?);`;
+        const insertQuery = `INSERT INTO bank_location (location) VALUES (?);`;
         db.query(insertQuery, [location], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).send({ error: 'Error adding branch' });
             } else {
                 const newBranchId = result.insertId;
-                db.query(`SELECT * FROM blom_location WHERE id = ?`, [newBranchId], (err, newLocResult) => {
+                db.query(`SELECT * FROM bank_location WHERE id = ?`, [newBranchId], (err, newLocResult) => {
                     if (err) {
                         console.error(err);
                         res.status(500).send({ error: 'Error fetching new branch' });
@@ -1929,7 +1929,7 @@ app.post('/add-company', async (req, res) => {
     const company_name = req.body.location;
 
     // Check if branch already exists
-    const duplicateCheckQuery = `SELECT * FROM blom_company WHERE company_name = ?`;
+    const duplicateCheckQuery = `SELECT * FROM bank_company WHERE company_name = ?`;
     db.query(duplicateCheckQuery, [company_name], (err, results) => {
         if (err) {
             console.error(err);
@@ -1942,14 +1942,14 @@ app.post('/add-company', async (req, res) => {
             return;
         }
         // Insert new company
-        const insertQuery = `INSERT INTO blom_company (company_name) VALUES (?);`;
+        const insertQuery = `INSERT INTO bank_company (company_name) VALUES (?);`;
         db.query(insertQuery, [company_name], (err, result) => {
             if (err) {
                 console.error(err);
                 res.status(500).send({ error: 'Error adding company' });
             } else {
                 const newCompanyId = result.insertId;
-                db.query(`SELECT * FROM blom_company WHERE id = ?`, [newCompanyId], (err, newComResult) => {
+                db.query(`SELECT * FROM bank_company WHERE id = ?`, [newCompanyId], (err, newComResult) => {
                     if (err) {
                         console.error(err);
                         res.status(500).send({ error: 'Error fetching new company' });
@@ -1967,7 +1967,7 @@ app.post('/add-new-payment', async (req, res) => {
     const newPayment = req.body; 
 
     const insertQuery = `
-        INSERT INTO blom_payment (payment_name, description, rate, user)
+        INSERT INTO bank_payment (payment_name, description, rate, user)
         VALUES (?, ?, ?, ?)
     `;
     db.query(insertQuery, [newPayment.payment_name, newPayment.description, newPayment.rate, newPayment.userId], (err, result) => {
@@ -1977,7 +1977,7 @@ app.post('/add-new-payment', async (req, res) => {
         }
 
         const newPaymentId = result.insertId; 
-        db.query(`SELECT * FROM blom_payment WHERE id = ?`, [newPaymentId], (err, newPayResult) => {
+        db.query(`SELECT * FROM bank_payment WHERE id = ?`, [newPaymentId], (err, newPayResult) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send({ error: 'Error fetching new payment' });
@@ -1989,7 +1989,7 @@ app.post('/add-new-payment', async (req, res) => {
 
 
 
-app.get('/blom_payments', (req, res) => {
+app.get('/bank_payments', (req, res) => {
     var query = `
                 SELECT 
                 bp.id, 
@@ -1999,7 +1999,7 @@ app.get('/blom_payments', (req, res) => {
                 bp.status, 
                 CONCAT(e.first_name, ' ', e.last_name) AS user
             FROM 
-                blom_payment bp
+                bank_payment bp
             JOIN 
                 employee e ON bp.user = e.id;
             `;
@@ -2015,7 +2015,7 @@ app.get('/blom_payments', (req, res) => {
 
 app.get('/get-rate', (req, res) => {
     const id = req.query.paymentId; 
-    const query = `SELECT rate FROM blom_payment WHERE id = ?`;
+    const query = `SELECT rate FROM bank_payment WHERE id = ?`;
 
     db.query(query, [id], (err, rateRes) => {
         if (err) {
@@ -2035,7 +2035,7 @@ app.get('/get-rate', (req, res) => {
 
 app.get('/get-items', (req, res) => {
     var query = `
-                SELECT * FROM blom_items;
+                SELECT * FROM bank_items;
             `;
     db.query(query, (err, result) => {
         if (err) {
@@ -2054,7 +2054,7 @@ app.patch('/close-payment', async (req, res) => {
         return res.status(400).send({ error: 'Payment ID is required' });
     }
 
-    const updateQuery = 'UPDATE blom_payment SET status = ? WHERE id = ?';
+    const updateQuery = 'UPDATE bank_payment SET status = ? WHERE id = ?';
     
     db.query(updateQuery, ['closed', id], (err, result) => {
         if (err) {
@@ -2072,7 +2072,7 @@ app.patch('/activate-payment', async (req, res) => {
         return res.status(400).send({ error: 'Payment ID is required' });
     }
 
-    const updateQuery = 'UPDATE blom_payment SET status = ? WHERE id = ?';
+    const updateQuery = 'UPDATE bank_payment SET status = ? WHERE id = ?';
     
     db.query(updateQuery, ['active', id], (err, result) => {
         if (err) {
@@ -2085,7 +2085,7 @@ app.patch('/activate-payment', async (req, res) => {
 
 
 
-app.get('/blom_active_payments', (req, res) => {
+app.get('/bank_active_payments', (req, res) => {
     var query = `
                 SELECT 
                 bp.id, 
@@ -2095,7 +2095,7 @@ app.get('/blom_active_payments', (req, res) => {
                 bp.status, 
                 CONCAT(e.first_name, ' ', e.last_name) AS user
             FROM 
-                blom_payment bp
+                bank_payment bp
             JOIN 
                 employee e ON bp.user = e.id
             WHERE 
@@ -2691,13 +2691,13 @@ const addbankLog = (userId, action, details) => {
         const userName = `${user.first_name} ${user.last_name}`;
 
         const insertbankLogQuery = `
-            INSERT INTO blom_logs (user, user_name, action, details)
+            INSERT INTO bank_logs (user, user_name, action, details)
             VALUES (?, ?, ?, ?)
         `;
         
         db.query(insertbankLogQuery, [userId, userName, action, details], (err, result) => {
             if (err) {
-                console.error('Error logging action in blom_logs:', err);
+                console.error('Error logging action in bank_logs:', err);
                 return;
             }
         });
@@ -4317,9 +4317,9 @@ app.get('/location', hrAuthenticateToken, (req, res) => {
     });
 });
 
-app.get('/blom_location', (req, res) => {
+app.get('/bank_location', (req, res) => {
     const dbQuery = `
-        SELECT id, location FROM blom_location;
+        SELECT id, location FROM bank_location;
     `;
 
     db.query(dbQuery, (err, results) => {
@@ -4331,7 +4331,7 @@ app.get('/blom_location', (req, res) => {
 
 app.get('/bank-relations', (req, res) => {
     const dbQuery = `
-        SELECT id, relation FROM blom_relation;
+        SELECT id, relation FROM bank_relation;
     `;
 
     db.query(dbQuery, (err, results) => {

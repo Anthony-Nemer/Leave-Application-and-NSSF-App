@@ -7,7 +7,7 @@ function handleDisconnect() {
         host: 'localhost',
         user: 'root',
         password: 'nemeranthony2004@',
-        database: 'arope_db',
+        database: 'custom_app_db',
         timezone: '+02:00'
     });
 
